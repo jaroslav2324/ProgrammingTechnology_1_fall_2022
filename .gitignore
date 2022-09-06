@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/lab1
+/.vs
