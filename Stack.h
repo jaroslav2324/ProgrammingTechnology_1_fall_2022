@@ -3,12 +3,9 @@
 #include "StructureTypes.h"
 
 
-class Deque: public Queue{
+class Stack: public Queue{
 
     public:
     void pushBack(int element);
-    void pushFront(int element);
     int popBack();
-    int popFront();
 };
-

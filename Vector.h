@@ -5,12 +5,13 @@ class Container {
 public:
 	Container();
 	~Container();
-	T& operator[](int index);
+	T operator[](int index);
 	void pushBack(T object);
 	void pushFront(T object);
+	void pushByIndex(T object, int index);
 	T popBack();
 	T popByIndex(int index);
-	T popFirst();
+	T popFront();
 	int getSize();
 	void print();
 
@@ -34,7 +35,7 @@ Container<T>::~Container() {
 }
 
 template <typename T>
-T& Container<T>::operator[](int index) {
+T Container<T>::operator[](int index) {
 	return *objectsArray[index];
 }
 
@@ -70,6 +71,38 @@ void Container<T>::pushBack(T object) {
 }
 
 template <typename T>
+void Container<T>::pushByIndex(T object, int index){
+
+	T* obj = new T(object);
+
+	if (size == memorySize)
+		resizeMemory();
+
+	for (int i = size; i > index; i--)
+		objectsArray[i] = objectsArray[i - 1];
+
+	objectsArray[index] = obj;
+
+	size += 1;
+}
+
+template <typename T>
+void Container<T>::pushFront(T object){
+
+	T* obj = new T(object);
+
+	if (size == memorySize)
+		resizeMemory();
+
+	for (int i = size; i > 0; i--)
+		objectsArray[i] = objectsArray[i - 1];
+
+	objectsArray[0] = obj;
+
+	size += 1;
+}
+
+template <typename T>
 T Container<T>::popBack() {
 
 	if (size <= 0)
@@ -90,13 +123,17 @@ T Container<T>::popByIndex(int index){
 
 	T obj = T(*objectsArray[index]);
 	delete objectsArray[index];
+
+	//shift array
+	for (int i = index; i < size; i++)
+		objectsArray[i] = objectsArray[i + 1];
 	
 	size -= 1;
 	return obj;
 }
 
 template <typename T>
-T Container<T>::popFirst(){
+T Container<T>::popFront(){
 
 	if (size <= 0)
 		return;
