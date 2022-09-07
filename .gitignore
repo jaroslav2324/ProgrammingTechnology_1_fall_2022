@@ -32,3 +32,6 @@
 *.app
 /lab1
 /.vs
+main
+
+.vscode
