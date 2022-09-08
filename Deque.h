@@ -10,5 +10,6 @@ class Deque: public Queue{
     void pushFront(int element);
     int popBack();
     int popFront();
+    void menu();
 };
 

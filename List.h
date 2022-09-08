@@ -12,4 +12,5 @@ class List: public Queue{
     int popBack();
     int popByIndex(int index);
     int popFront();
+    void menu();
 };
