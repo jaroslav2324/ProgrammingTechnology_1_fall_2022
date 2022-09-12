@@ -1,23 +1,27 @@
 #include "List.h"
 
-    void List::pushBack(int element){
-        intVector->pushBack(element);
-    }
-    void List::pushByIndex(int element, int index){
-        intVector->pushByIndex(element, index);
-    }
-    void List::pushFront(int element){
-        intVector->pushFront(element);
-    }
-    int List::popBack(){
-        return intVector->popBack();
-    }
-    int List::popByIndex(int index){
-        return intVector->popByIndex(index);
-    }
-    int List::popFront(){
-        return intVector->popFront();
-    }
+List::List(){
+    type = TYPE_LIST;
+}
+
+void List::pushBack(int element){
+    intVector->pushBack(element);
+}
+void List::pushByIndex(int element, int index){
+    intVector->pushByIndex(element, index);
+}
+void List::pushFront(int element){
+    intVector->pushFront(element);
+}
+int List::popBack(){
+    return intVector->popBack();
+}
+int List::popByIndex(int index){
+    return intVector->popByIndex(index);
+}
+int List::popFront(){
+    return intVector->popFront();
+}
 
 void List::menu(){
 
@@ -72,11 +76,11 @@ void List::menu(){
                 break;
 
             case '4':
-
+            {
                 int element = popFront();
                 clearTerminal();
                 break;
-
+            }
             case '5':
 
             {
@@ -89,11 +93,11 @@ void List::menu(){
                 break;
 
             case '6':
-
+            {
                 int element = popBack();
                 clearTerminal();
                 break;
-
+            }
             case '7':
 
                 print();

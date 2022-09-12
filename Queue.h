@@ -1,8 +1,10 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 
 #include "Vector.h"
-#include "utility.h"
+#include "util.h"
 
 using std::cin;
 using std::cout;
@@ -18,9 +20,12 @@ public:
 	int size();
 
 	void print();
-	virtual void menu() = 0;
+	virtual void menu();
+
+	int getType();
 
 protected:
 	Container<int>* intVector;
+	int type;
 };
 

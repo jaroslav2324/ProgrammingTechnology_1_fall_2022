@@ -40,3 +40,11 @@ void Queue::print(){
 		std::cout << intVector->operator[](i) << " ";
 		std::cout << std::endl;
 }
+
+void Queue::menu(){
+    //TODO throw exception
+}
+
+int Queue::getType(){
+    return type;
+}

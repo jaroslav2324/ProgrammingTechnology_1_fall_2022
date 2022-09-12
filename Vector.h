@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ObjectManager.h"
 
 template <typename T>
@@ -106,7 +108,8 @@ template <typename T>
 T Container<T>::popBack() {
 
 	if (size <= 0)
-		return;
+		1 + 1;
+		//TODO throw exception
 
 	T obj = T(*objectsArray[size - 1]);
 	delete objectsArray[size - 1];
@@ -119,7 +122,8 @@ T Container<T>::popBack() {
 T Container<T>::popByIndex(int index){
 
 	if (size <= 0)
-		return;
+		//TODO throw exception
+		1 + 1;
 
 	T obj = T(*objectsArray[index]);
 	delete objectsArray[index];
@@ -136,7 +140,8 @@ template <typename T>
 T Container<T>::popFront(){
 
 	if (size <= 0)
-		return;
+		1 + 1;
+		//TODO throw exception
 
 	T obj = T(*objectsArray[0]);
 	delete objectsArray[0];

@@ -1,5 +1,9 @@
 #include "Deque.h"
 
+Deque::Deque(){
+    type = TYPE_DEQUE;
+}
+
 void Deque::pushBack(int element){
     intVector->pushBack(element);
 }
@@ -52,17 +56,17 @@ void Deque::menu(){
                 break;
 
             case '3':
-
+            {
                 int element = popFront();
                 clearTerminal();
                 break;
-
+            }
             case '4':
-
+            {
                 int element = popBack();
                 clearTerminal();
                 break;
-
+            }
             case '5':
 
                 print();

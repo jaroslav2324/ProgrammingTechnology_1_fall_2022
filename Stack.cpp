@@ -1,5 +1,9 @@
 #include "Stack.h"
 
+Stack::Stack(){
+    type = TYPE_STACK;
+}
+
 
 void Stack::pushBack(int element){
     intVector->pushBack(element);

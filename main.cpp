@@ -1,7 +1,8 @@
 #include <iostream>
 
-#include "Deque.h"
+#include "Keeper.h"
 
 int main() {
-
+    Keeper<Queue> keeper("input.txt", "output.txt");
+    keeper.menu();
 }

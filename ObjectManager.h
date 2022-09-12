@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -20,6 +22,8 @@ public:
 	void readObject(T& copyHereObject);
 	void readObjects(T** copyHereArrayOfObjects, int amount);
 	void readObjects(T* copyHereArrayOfObjects, int amount);
+	void writeInt(int x);
+	int readInt();
 
 	void truncFile();
 
@@ -127,4 +131,18 @@ void ObjectManager<T>::readObjects(T* copyHereArrayOfObjects, int amount) {
 
 	for (int i = 0; i < amount; i++)
 		copyHereArrayOfObjects[i].read(file);
+}
+
+template <typename T>
+void ObjectManager<T>::writeInt(int x){
+
+	file << x << endl;
+}
+
+template <typename T>
+int ObjectManager<T>::readInt(){
+
+	int x;
+	file >> x;
+	return x;
 }
