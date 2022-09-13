@@ -8,6 +8,9 @@
 class List: public Queue{
 
     public:
+    List();
+    List(const List& list);
+    ~List();
     void pushBack(int element);
     void pushByIndex(int element, int index);
     void pushFront(int element);

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Vector.h"
+#include "Container.h"
 #include "util.h"
 
 using std::cin;
@@ -13,6 +13,7 @@ using std::endl;
 class Queue{
 public:
 	Queue();
+	Queue(const Queue& queue);
 	~Queue();
 	void write(std::fstream& file);
 	void read(std::fstream& file);
@@ -25,7 +26,7 @@ public:
 	int getType();
 
 protected:
-	Container<int>* intVector;
+	Container<int>* intVector = nullptr;
 	int type;
 };
 

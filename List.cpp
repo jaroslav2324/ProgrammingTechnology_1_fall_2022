@@ -1,7 +1,27 @@
 #include "List.h"
 
 List::List(){
+    cout << "List constructor called" << endl;
     type = TYPE_LIST;
+}
+
+List::List(const List& list){
+    cout << "List copy constructor called" << endl;
+    type = list.type;
+
+    if (intVector != nullptr)
+        delete intVector;
+    intVector = nullptr;
+
+    intVector = new Container(*list.intVector);
+}
+
+List::~List(){
+    cout << "List destructor called" << endl;
+    if (intVector != nullptr)
+        delete intVector;
+
+    intVector = nullptr;
 }
 
 void List::pushBack(int element){

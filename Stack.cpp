@@ -1,7 +1,28 @@
 #include "Stack.h"
 
 Stack::Stack(){
+    cout << "Stack constructor called" << endl;
     type = TYPE_STACK;
+}
+
+Stack::Stack(const Stack& stack){
+    cout << "Stack copy constructor called" << endl;
+    type = stack.type;
+
+    if (intVector != nullptr)
+        delete intVector;
+    intVector = nullptr;
+
+    intVector = new Container(*stack.intVector);
+}
+
+Stack::~Stack(){
+    cout << "Stack destructor called" << endl;
+
+    if (intVector != nullptr)
+        delete intVector;
+
+    intVector = nullptr;
 }
 
 

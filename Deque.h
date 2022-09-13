@@ -8,6 +8,9 @@
 class Deque: public Queue{
 
     public:
+    Deque();
+    Deque(const Deque& deque);
+    ~Deque();
     void pushBack(int element);
     void pushFront(int element);
     int popBack();

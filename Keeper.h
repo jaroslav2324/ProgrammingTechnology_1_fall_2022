@@ -1,4 +1,4 @@
-#include "Vector.h"
+#include "Container.h"
 #include "ObjectManager.h"
 #include "StructureTypes.h"
 #include "Deque.h"
@@ -23,8 +23,8 @@ private:
     void read();
 
 	Container<T> objectsVector;
-	ObjectManager<T>* objectWriter;
-	ObjectManager<T>* objectReader;
+	ObjectManager<T>* objectWriter = nullptr;
+	ObjectManager<T>* objectReader = nullptr;
 
 	int numChosenContainer = 0;
 };
@@ -44,8 +44,6 @@ Keeper<T>::~Keeper(){
 
 template <typename T>
 void Keeper<T>::spawnObject(int type){
-
-
 
     switch (type){
     
@@ -160,18 +158,19 @@ void Keeper<T>::menu(){
                     type = enterInt();
                     switch (type)
                     {
-                    case TYPE_LIST:
+                    case 1:
                         spawnObject(TYPE_LIST);
                         break;
-                    case TYPE_STACK:
+                    case 2:
                         spawnObject(TYPE_STACK);
                         break;
-                    case TYPE_DEQUE:
+                    case 3:
                         spawnObject(TYPE_DEQUE);
                         break;
 
                     default:
                         //TODO throw exception
+                        break;
                     }
                 }
                 clearTerminal();
@@ -185,9 +184,9 @@ void Keeper<T>::menu(){
 
             case '6':
 
-            for (int i = 0; objectsVector.getSize(); i++){
+            for (int i = 0; i < objectsVector.getSize(); i++){
 
-                type = objectsVector[i].getType();
+                int type = objectsVector[i].getType();
 
                 switch (type)
                 {

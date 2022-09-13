@@ -1,11 +1,27 @@
 #include "Queue.h"
 
 Queue::Queue(){
+    cout << "Queue constructor called" << endl;
 	intVector = new Container<int>;
 }
 
+Queue::Queue(const Queue& queue){
+    cout << "Queue copy constructor called" << endl;
+    type = queue.type;
+
+    if (intVector != nullptr)
+        delete intVector;
+    intVector = nullptr;
+
+    intVector = new Container(*queue.intVector);
+}
+
 Queue::~Queue(){
-	delete intVector;
+    cout << "Queue destructor called" << endl;
+    if (intVector != nullptr)
+	    delete intVector;
+    
+    intVector = nullptr;
 }
 
 int Queue::size(){

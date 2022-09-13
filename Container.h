@@ -6,6 +6,7 @@ template <typename T>
 class Container {
 public:
 	Container();
+	Container(const Container<T>& container);
 	~Container();
 	T operator[](int index);
 	void pushBack(T object);
@@ -27,11 +28,26 @@ friend class ObjectManager<T>;
 
 template <typename T>
 Container<T>::Container() {
+	cout << "Container constructor called" << endl;
+	objectsArray = new T* [memorySize];
+}
+
+template <typename T>
+Container<T>::Container(const Container<T>& container){
+
+    cout << "Container copy constructor called" << endl;
+
+	memorySize = container.memorySize;
+	size = container.size;
+
 	objectsArray = new T* [memorySize];
 }
 
 template <typename T>
 Container<T>::~Container() {
+
+	cout << "Container destructor called" << endl;
+
 	for (int i = 0; i < size; i++)
 		delete objectsArray[i];
 }
@@ -113,6 +129,8 @@ T Container<T>::popBack() {
 
 	T obj = T(*objectsArray[size - 1]);
 	delete objectsArray[size - 1];
+
+	objectsArray[size - 1] = nullptr;
 	
 	size -= 1;
 	return obj;
@@ -145,6 +163,9 @@ T Container<T>::popFront(){
 
 	T obj = T(*objectsArray[0]);
 	delete objectsArray[0];
+
+	for (int i = 0; i < size - 1; i++)
+		objectsArray[i] = objectsArray[i + 1];
 	
 	size -= 1;
 	return obj;

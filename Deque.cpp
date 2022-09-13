@@ -1,7 +1,27 @@
 #include "Deque.h"
 
 Deque::Deque(){
+    cout << "Deque constructor called" << endl;
     type = TYPE_DEQUE;
+}
+
+Deque::Deque(const Deque& deque){
+    cout << "Deque copy constructor called" << endl;
+    type = deque.type;
+
+    if (intVector != nullptr)
+        delete intVector;
+    intVector = nullptr;
+
+    intVector = new Container(*deque.intVector);
+}
+
+Deque::~Deque(){
+    cout << "Deque destructor called" << endl;
+    if (intVector != nullptr)
+        delete intVector;
+
+    intVector = nullptr;
 }
 
 void Deque::pushBack(int element){
