@@ -43,6 +43,7 @@ char enterSymbol(){
 
 void waitAnyKeyAndNewLine(){
 
+    cout << "Enter any symbol to continue" << endl;
     std::string str;
     cin >> str;
 }

@@ -59,8 +59,7 @@ void Queue::print(){
 }
 
 void Queue::menu(){
-    //TODO throw exception
-
+    cout << "Mistake: Menu of Queue called" << endl;
 }
 
 int Queue::getType(){

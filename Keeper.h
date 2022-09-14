@@ -1,3 +1,5 @@
+#include <exception>
+
 #include "Container.h"
 #include "ObjectManager.h"
 #include "StructureTypes.h"
@@ -72,7 +74,7 @@ void Keeper<T>::spawnObject(int type){
     }
     
     default:
-        //TODO throw exception
+        throw std::invalid_argument("Wrong type of spawning object");
         break;
     }
     
@@ -92,6 +94,7 @@ void Keeper<T>::read(){
     for (int i = 0; i < size; i++){
         int objectType = objectReader->readInt();
 
+    try{
         switch(objectType){
             case TYPE_DEQUE:
             {
@@ -115,9 +118,14 @@ void Keeper<T>::read(){
             break; 
             }
             default:
-            //TODO throw 
+            throw std::invalid_argument("Wrong type of structure in input file!");
             break;
         }
+    }
+    catch(std::invalid_argument& exc){
+        cout << exc.what() << endl;
+        waitAnyKeyAndNewLine();
+    }
     }
 }
 
@@ -158,8 +166,12 @@ void Keeper<T>::menu(){
 				cout << "Enter container index" << endl;
                 int index;
                 index = enterInt();
-				//TODO check if exists
-				numChosenContainer = index;
+				if (0 <= index && index < objectsVector.getSize())
+				    numChosenContainer = index;
+                else{
+                    cout << "Wrong index!" << endl;
+                    waitAnyKeyAndNewLine();
+                }
 
             }
                 clearTerminal();
@@ -168,6 +180,14 @@ void Keeper<T>::menu(){
             case '2':
 
                 {
+
+                if ( ! (0 <= numChosenContainer && numChosenContainer < objectsVector.getSize())){
+                    cout << "No container with this index! Enter another index." << endl;
+                    waitAnyKeyAndNewLine();
+                    clearTerminal();
+                    break;
+                }
+
                 T& objRef = objectsVector.operator[](numChosenContainer);
 
                 if (objRef.getType() == TYPE_DEQUE){
@@ -182,6 +202,7 @@ void Keeper<T>::menu(){
                     Stack* stackPtr = (Stack*)(&objRef);
                     (stackPtr)->Stack::menu();
                 }
+
                 }
 
                 clearTerminal();
@@ -203,21 +224,28 @@ void Keeper<T>::menu(){
                 {
                     int type;
                     type = enterInt();
-                    switch (type)
-                    {
-                    case 1:
-                        spawnObject(TYPE_LIST);
-                        break;
-                    case 2:
-                        spawnObject(TYPE_STACK);
-                        break;
-                    case 3:
-                        spawnObject(TYPE_DEQUE);
-                        break;
 
-                    default:
-                        //TODO throw exception
-                        break;
+                    try{
+                        switch (type)
+                        {
+                        case 1:
+                            spawnObject(TYPE_LIST);
+                            break;
+                        case 2:
+                            spawnObject(TYPE_STACK);
+                            break;
+                        case 3:
+                            spawnObject(TYPE_DEQUE);
+                            break;
+
+                        default:
+                            throw std::invalid_argument("There is no structure with this number");
+                            break;
+                        }
+                    }
+                    catch (std::invalid_argument& exc){
+                        cout << exc.what() << endl;
+                        waitAnyKeyAndNewLine();
                     }
                 }
                 clearTerminal();
@@ -225,7 +253,6 @@ void Keeper<T>::menu(){
 
             case '5':
 
-            //TODO add try
             deleteChosenObject();
             break;
 
@@ -238,15 +265,15 @@ void Keeper<T>::menu(){
                 switch (type)
                 {
                 case TYPE_LIST:
-                    cout << "LIST" << endl;
+                    cout << i << "-" << "LIST" << endl;
                     break;
 
                 case TYPE_STACK:
-                    cout << "STACK" << endl;
+                    cout << i << "-" << "STACK" << endl;
                     break;
 
                 case TYPE_DEQUE:
-                    cout << "DEQUE" << endl;
+                    cout << i << "-" << "DEQUE" << endl;
                     break;
                 
                 default:
