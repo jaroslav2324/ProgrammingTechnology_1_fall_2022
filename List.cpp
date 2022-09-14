@@ -6,7 +6,7 @@ List::List(){
 }
 
 List::List(const List& list){
-    //cout << "List copy constructor called" << endl;
+    cout << "List copy constructor called" << endl;
     type = list.type;
 
     if (intVector != nullptr)

@@ -54,7 +54,8 @@ void Queue::print(){
 
 	for (int i = 0; i < size(); i++)
 		std::cout << intVector->operator[](i) << " ";
-		std::cout << std::endl;
+    
+	std::cout << std::endl;
 }
 
 void Queue::menu(){

@@ -41,6 +41,10 @@ Container<T>::Container(const Container<T>& container){
 	size = container.size;
 
 	objectsArray = new T* [memorySize];
+
+	for (int i = 0; i < size; i++)
+		objectsArray[i] = new T(*(container.objectsArray[i]));
+
 }
 
 template <typename T>
