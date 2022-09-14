@@ -8,7 +8,7 @@ public:
 	Container();
 	Container(const Container<T>& container);
 	~Container();
-	T operator[](int index);
+	T& operator[](int index);
 	void pushBack(T object);
 	void pushFront(T object);
 	void pushByIndex(T object, int index);
@@ -28,14 +28,14 @@ friend class ObjectManager<T>;
 
 template <typename T>
 Container<T>::Container() {
-	cout << "Container constructor called" << endl;
+	//cout << "Container constructor called" << endl;
 	objectsArray = new T* [memorySize];
 }
 
 template <typename T>
 Container<T>::Container(const Container<T>& container){
 
-    cout << "Container copy constructor called" << endl;
+    //cout << "Container copy constructor called" << endl;
 
 	memorySize = container.memorySize;
 	size = container.size;
@@ -46,15 +46,17 @@ Container<T>::Container(const Container<T>& container){
 template <typename T>
 Container<T>::~Container() {
 
-	cout << "Container destructor called" << endl;
+	//cout << "Container destructor called" << endl;
 
 	for (int i = 0; i < size; i++)
 		delete objectsArray[i];
 }
 
 template <typename T>
-T Container<T>::operator[](int index) {
-	return *objectsArray[index];
+T& Container<T>::operator[](int index) {
+	T* objectPtr = objectsArray[index];
+	T& objRef = *objectPtr;
+	return objRef;
 }
 
 template <typename T>

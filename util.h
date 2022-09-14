@@ -11,4 +11,6 @@ using std::numeric_limits;
 using std::streamsize;
 
 int enterInt();
+char enterSymbol();
 void clearTerminal();
+void waitAnyKeyAndNewLine();

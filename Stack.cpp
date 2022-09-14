@@ -1,12 +1,12 @@
 #include "Stack.h"
 
 Stack::Stack(){
-    cout << "Stack constructor called" << endl;
+    //cout << "Stack constructor called" << endl;
     type = TYPE_STACK;
 }
 
 Stack::Stack(const Stack& stack){
-    cout << "Stack copy constructor called" << endl;
+    //cout << "Stack copy constructor called" << endl;
     type = stack.type;
 
     if (intVector != nullptr)
@@ -17,7 +17,7 @@ Stack::Stack(const Stack& stack){
 }
 
 Stack::~Stack(){
-    cout << "Stack destructor called" << endl;
+    //cout << "Stack destructor called" << endl;
 
     if (intVector != nullptr)
         delete intVector;
@@ -43,8 +43,8 @@ void Stack::menu(){
              << "3 - print stack"               << endl
              << "b - go back"                   << endl;
 
-        char c;
-        cin >> c;
+        char c = enterSymbol();
+
         clearTerminal();
 
         switch(c){
@@ -67,7 +67,7 @@ void Stack::menu(){
             case '3':
 
                 print();
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
                 break;
 
@@ -79,7 +79,7 @@ void Stack::menu(){
             default:
             
                 cout << "Wrong key" << endl;
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
         }
     }

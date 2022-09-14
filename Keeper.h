@@ -34,10 +34,13 @@ template <typename T>
 Keeper<T>::Keeper(std::string readPath, std::string writePath){
 	objectReader = new ObjectManager<T>(readPath, 'r');
 	objectWriter = new ObjectManager<T>(writePath, 'w');
+    read();
 }
 
 template <typename T>
 Keeper<T>::~Keeper(){
+
+    write();
 	delete objectReader;
 	delete objectWriter;
 }
@@ -86,11 +89,35 @@ void Keeper<T>::read(){
 
     int size = objectReader->readInt();
 
-    T obj;
-
     for (int i = 0; i < size; i++){
-    objectReader->readObject(obj);
-    objectsVector.pushBack(obj);
+        int objectType = objectReader->readInt();
+
+        switch(objectType){
+            case TYPE_DEQUE:
+            {
+            Deque obj;
+            objectReader->readObject(obj);
+            objectsVector.pushBack(obj);
+            break;
+            }
+            case TYPE_LIST:
+            {
+            List obj;
+            objectReader->readObject(obj);
+            objectsVector.pushBack(obj);
+            break;
+            }
+            case TYPE_STACK:
+            {
+            Stack obj;
+            objectReader->readObject(obj);
+            objectsVector.pushBack(obj);
+            break; 
+            }
+            default:
+            //TODO throw 
+            break;
+        }
     }
 }
 
@@ -99,8 +126,12 @@ void Keeper<T>::write(){
 
     objectWriter->writeInt(objectsVector.getSize());
     
-    for (int i = 0; i < objectsVector.getSize(); i++)
-        objectWriter->writeObject(objectsVector[i]);
+    for (int i = 0; i < objectsVector.getSize(); i++){
+
+        T& object = objectsVector[i];
+        objectWriter->writeInt(object.getType());
+        objectWriter->writeObject(object);
+    }
 }
 
 template <typename T>
@@ -116,8 +147,8 @@ void Keeper<T>::menu(){
              << "6 - print container types"   << endl 
              << "e - exit"                    << endl;
  
-        char c;
-        cin >> c;
+        char c = enterSymbol();
+        
         clearTerminal();
 
         switch(c){
@@ -136,14 +167,30 @@ void Keeper<T>::menu(){
 
             case '2':
 
-				(objectsVector.operator[](numChosenContainer)).menu();
+                {
+                T& objRef = objectsVector.operator[](numChosenContainer);
+
+                if (objRef.getType() == TYPE_DEQUE){
+                    Deque* deqPtr = (Deque*)(&objRef);
+                    (deqPtr)->Deque::menu();
+                }
+                if (objRef.getType() == TYPE_LIST){
+                    List* listPtr = (List*)(&objRef);
+                    (listPtr)->List::menu();
+                }
+                if (objRef.getType() == TYPE_STACK){
+                    Stack* stackPtr = (Stack*)(&objRef);
+                    (stackPtr)->Stack::menu();
+                }
+                }
+
                 clearTerminal();
                 break;
 
             case '3':
 
 				(objectsVector.operator[](numChosenContainer)).print();
-				getchar();
+				waitAnyKeyAndNewLine();
                 clearTerminal();
                 break;
 
@@ -207,7 +254,8 @@ void Keeper<T>::menu(){
                 }
             }
             
-            getchar();
+            waitAnyKeyAndNewLine();
+            clearTerminal();
 
             break;
 
@@ -219,7 +267,7 @@ void Keeper<T>::menu(){
             default:
             
                 cout << "Wrong key" << endl;
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
         }
     }

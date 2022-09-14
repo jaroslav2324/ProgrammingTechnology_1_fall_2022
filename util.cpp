@@ -20,6 +20,33 @@ int enterInt(){
     return num;
 }
 
+/*reads char if provides char*/
+char enterSymbol(){
+
+    std::string str;
+
+    cout << "Enter symbol" << endl;
+    cin >> str;
+
+    while (!(cin.good()) || str.length() > 1){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Wrong symbol! Try once again!" << endl; 
+        cout << "Enter symbol" << endl;
+        cin >> str;
+    }
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    return str[0];
+}
+
+void waitAnyKeyAndNewLine(){
+
+    std::string str;
+    cin >> str;
+}
+
 void clearTerminal(){
     system("clear");
 }

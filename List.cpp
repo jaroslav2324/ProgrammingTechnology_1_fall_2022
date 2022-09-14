@@ -1,12 +1,12 @@
 #include "List.h"
 
 List::List(){
-    cout << "List constructor called" << endl;
+    //cout << "List constructor called" << endl;
     type = TYPE_LIST;
 }
 
 List::List(const List& list){
-    cout << "List copy constructor called" << endl;
+    //cout << "List copy constructor called" << endl;
     type = list.type;
 
     if (intVector != nullptr)
@@ -17,7 +17,7 @@ List::List(const List& list){
 }
 
 List::~List(){
-    cout << "List destructor called" << endl;
+    //cout << "List destructor called" << endl;
     if (intVector != nullptr)
         delete intVector;
 
@@ -56,8 +56,8 @@ void List::menu(){
              << "7 - print list"                                << endl
              << "b - go back"                                   << endl;
 
-        char c;
-        cin >> c;
+        char c = enterSymbol();
+
         clearTerminal();
 
         switch(c){
@@ -121,7 +121,7 @@ void List::menu(){
             case '7':
 
                 print();
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
                 break;
 
@@ -133,7 +133,7 @@ void List::menu(){
             default:
             
                 cout << "Wrong key" << endl;
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
         }
     }

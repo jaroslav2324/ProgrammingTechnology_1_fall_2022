@@ -1,12 +1,12 @@
 #include "Deque.h"
 
 Deque::Deque(){
-    cout << "Deque constructor called" << endl;
+    //cout << "Deque constructor called" << endl;
     type = TYPE_DEQUE;
 }
 
 Deque::Deque(const Deque& deque){
-    cout << "Deque copy constructor called" << endl;
+    //cout << "Deque copy constructor called" << endl;
     type = deque.type;
 
     if (intVector != nullptr)
@@ -17,7 +17,7 @@ Deque::Deque(const Deque& deque){
 }
 
 Deque::~Deque(){
-    cout << "Deque destructor called" << endl;
+    //cout << "Deque destructor called" << endl;
     if (intVector != nullptr)
         delete intVector;
 
@@ -51,8 +51,8 @@ void Deque::menu(){
              << "5 - print deque"                                << endl
              << "b - go back"                                    << endl;
 
-        char c;
-        cin >> c;
+        char c = enterSymbol();
+
         clearTerminal();
 
         switch(c){
@@ -90,7 +90,7 @@ void Deque::menu(){
             case '5':
 
                 print();
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
                 break;
 
@@ -102,7 +102,7 @@ void Deque::menu(){
             default:
             
                 cout << "Wrong key" << endl;
-                getchar();
+                waitAnyKeyAndNewLine();
                 clearTerminal();
         }
     }

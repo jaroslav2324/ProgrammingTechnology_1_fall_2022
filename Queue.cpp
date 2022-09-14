@@ -1,12 +1,12 @@
 #include "Queue.h"
 
 Queue::Queue(){
-    cout << "Queue constructor called" << endl;
+    //cout << "Queue constructor called" << endl;
 	intVector = new Container<int>;
 }
 
 Queue::Queue(const Queue& queue){
-    cout << "Queue copy constructor called" << endl;
+    //cout << "Queue copy constructor called" << endl;
     type = queue.type;
 
     if (intVector != nullptr)
@@ -17,7 +17,7 @@ Queue::Queue(const Queue& queue){
 }
 
 Queue::~Queue(){
-    cout << "Queue destructor called" << endl;
+    //cout << "Queue destructor called" << endl;
     if (intVector != nullptr)
 	    delete intVector;
     
@@ -59,6 +59,7 @@ void Queue::print(){
 
 void Queue::menu(){
     //TODO throw exception
+
 }
 
 int Queue::getType(){
