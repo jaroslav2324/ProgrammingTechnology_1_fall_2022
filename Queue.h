@@ -5,6 +5,7 @@
 
 #include "Container.h"
 #include "util.h"
+#include "WrongFileContentErr.h"
 
 using std::cin;
 using std::cout;

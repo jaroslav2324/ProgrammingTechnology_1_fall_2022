@@ -42,10 +42,14 @@ void Queue::read(std::fstream& file){
 
     int size;
     file >> size;
+    if (file.fail())
+        throw WrongFileContentError();
 
     int elm;
     for (int i = 0; i < size; i++){
         file >> elm;
+        if (file.fail())
+        throw WrongFileContentError();
         intVector->pushBack(elm);
     }  
 }

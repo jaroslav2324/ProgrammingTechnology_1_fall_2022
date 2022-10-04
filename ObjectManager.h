@@ -4,6 +4,9 @@
 #include <fstream>
 #include <string>
 
+#include "NoFileExistsErr.h"
+#include "WrongFileContentErr.h"
+
 using std::cout;
 using std::endl;
 
@@ -25,6 +28,8 @@ public:
 	void writeInt(int x);
 	int readInt();
 
+	void checkFileForAllInts();
+
 	void truncFile();
 
 private:
@@ -41,6 +46,8 @@ ObjectManager<T>::ObjectManager(std::string filePath, char mode) {
 	ObjectManager::mode = mode;
 
 	openFile();
+
+	checkFileForAllInts();
 }
 
 template <typename T>
@@ -79,8 +86,11 @@ void ObjectManager<T>::openFile() {
 		break;
 	}
 
-	if (!file.is_open())
-		cout << "NO FILE " << filePath << " WAS OPENED. DOES THIS FILE EXISTS?" << endl;
+	if (!file.is_open()){
+		NoFileExistsError err;
+		throw err;
+	}
+		//cout << "NO FILE " << filePath << " WAS OPENED. DOES THIS FILE EXISTS?" << endl;
 }
 
 template <typename T>
@@ -144,5 +154,31 @@ int ObjectManager<T>::readInt(){
 
 	int x;
 	file >> x;
+	if (file.fail()){
+		WrongFileContentError err;
+		throw err;
+	}
 	return x;
+}
+
+//throws WrongFileContentError if not int in the file
+template <typename T>
+void ObjectManager<T>::checkFileForAllInts(){
+
+	if (file.is_open()){
+
+		int num = 0;
+
+		while(file >> num){}
+			
+		if (file.eof()){
+			file.close();
+			openFile();
+			return;
+		}
+		if (file.fail()){
+			file.clear();
+			throw WrongFileContentError();
+			}
+	}
 }

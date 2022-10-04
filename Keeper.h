@@ -6,6 +6,7 @@
 #include "Deque.h"
 #include "List.h"
 #include "Stack.h"
+#include "WrongFileContentErr.h"
 
 
 template <typename T>
@@ -34,9 +35,23 @@ private:
 
 template <typename T>
 Keeper<T>::Keeper(std::string readPath, std::string writePath){
+
+    try{
 	objectReader = new ObjectManager<T>(readPath, 'r');
-	objectWriter = new ObjectManager<T>(writePath, 'w');
     read();
+    }
+    catch(NoFileExistsError err){
+        cout << "No input file exists!" << endl;
+    }
+    catch(WrongFileContentError err){
+        cout << "Wrong values in the file. Continuing with empty keeper" << endl;
+    }
+
+    try{
+	objectWriter = new ObjectManager<T>(writePath, 'w');
+    }
+    catch(NoFileExistsError err){}
+    catch(WrongFileContentError err){}
 }
 
 template <typename T>
@@ -94,7 +109,6 @@ void Keeper<T>::read(){
     for (int i = 0; i < size; i++){
         int objectType = objectReader->readInt();
 
-    try{
         switch(objectType){
             case TYPE_DEQUE:
             {
@@ -118,14 +132,10 @@ void Keeper<T>::read(){
             break; 
             }
             default:
-            throw std::invalid_argument("Wrong type of structure in input file!");
+            cout << "Wrong type of object" << endl;
             break;
+            
         }
-    }
-    catch(std::invalid_argument& exc){
-        cout << exc.what() << endl;
-        waitAnyKeyAndNewLine();
-    }
     }
 }
 
